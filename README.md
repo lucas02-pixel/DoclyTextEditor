@@ -170,6 +170,11 @@ As constantes e operações principais estão em [`src/editor/document_manager.l
 
 Ao alterar o formato JSON, mantenha compatibilidade com arquivos existentes ou implemente migração em `loadAppData()`. O formato atual usa `format = "docly"` e `version = 1`.
 
+## Baixar
+
+Baixe gratis a ultima versão em releases
+Consulte a pagina [`RELEASES`](./RELEASES).
+
 ## Licença
 
-O projeto é distribuído sob a licença MIT. Consulte o arquivo [`LICENSE`](./LICENSE).
+O projeto é distribuído sob a licença GNU General Public License. Consulte o arquivo [`LICENSE`](./LICENSE).
