@@ -173,7 +173,7 @@ Ao alterar o formato JSON, mantenha compatibilidade com arquivos existentes ou i
 ## Baixar
 
 Baixe gratis a ultima versão em releases
-Consulte a pagina [`RELEASES`](./RELEASES).
+Consulte a pagina [`RELEASES`](https://github.com/lucas02-pixel/DoclyTextEditor/releases).
 
 ## Licença
 
