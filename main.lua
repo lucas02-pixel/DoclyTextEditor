@@ -69,6 +69,12 @@ function love.filedropped(file)
     App.filedropped(file)
 end
 
+function love.wheelmoved(x, y)
+    if App.wheelmoved then
+        App.wheelmoved(x, y)
+    end
+end
+
 function love.run()
     if love.load then
         love.load(

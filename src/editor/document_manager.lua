@@ -5,6 +5,7 @@ local documents = {}
 local nextId = 1
 local APP_FILE = "documents.docly"
 local dirty = false
+local revision = 0
 
 local function escapeJson(value)
     value = value:gsub("\\", "\\\\")
@@ -422,13 +423,29 @@ function Documents.create()
 
     nextId = nextId + 1
     table.insert(documents, document)
-    dirty = true
+    Documents.markDirty()
 
     return document
 end
 
 function Documents.getAll()
     return documents
+end
+
+function Documents.getRevision()
+    return revision
+end
+
+function Documents.rename(document, title)
+    title = (title or ""):match("^%s*(.-)%s*$")
+
+    if title == "" then
+        return nil, "empty_title"
+    end
+
+    document.title = title
+    Documents.markDirty()
+    return true
 end
 
 function Documents.getCurrentPage(document)
@@ -444,13 +461,14 @@ function Documents.addPage(document)
     local insertPosition = document.currentPage + 1
 
     table.insert(document.pages, insertPosition, newPage)
-    dirty = true
+    Documents.markDirty()
 
     return insertPosition
 end
 
 function Documents.markDirty()
     dirty = true
+    revision = revision + 1
 end
 
 function Documents.saveAppData()
@@ -487,6 +505,7 @@ function Documents.loadAppData()
 
     documents = {}
     nextId = 1
+    revision = revision + 1
 
     for _, saved in ipairs(state.documents) do
         local document = restoreDocument(saved)
@@ -603,7 +622,7 @@ function Documents.openDocly(path)
 
         if document then
             table.insert(documents, document)
-            dirty = true
+            Documents.markDirty()
             return document
         end
     end

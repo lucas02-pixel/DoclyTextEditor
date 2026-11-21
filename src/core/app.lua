@@ -173,6 +173,8 @@ end
 function App.mousemoved(x, y, dx, dy)
     if currentDocument then
         Editor.mousemoved(x, y, dx, dy, currentDocument)
+    else
+        Homepage.mousemoved(x, y)
     end
 
     updateCursor(x, y)
@@ -190,6 +192,8 @@ end
 function App.textinput(text)
     if currentDocument then
         Editor.textinput(text, currentDocument, Sidebar.activeTool)
+    else
+        Homepage.textinput(text)
     end
 end
 
@@ -206,6 +210,13 @@ function App.keypressed(key)
         end
 
         Editor.keypressed(key, currentDocument, Sidebar.activeTool)
+    else
+        local document = Homepage.keypressed(key)
+
+        if document then
+            currentDocument = document
+            updateCursor(love.mouse.getPosition())
+        end
     end
 end
 
@@ -222,11 +233,19 @@ function App.isAnimating()
         or false
 end
 
+function App.wheelmoved(x, y)
+    if not currentDocument then
+        Homepage.wheelmoved(x, y)
+    end
+end
+
 -- Pede redesenho em movimentos do mouse (desenhando ou selecionando)
 function App.wantsMouseMove()
-    return currentDocument
-        and Editor.wantsMouseMove()
-        or false
+    if currentDocument then
+        return Editor.wantsMouseMove()
+    end
+
+    return true
 end
 
 return App
